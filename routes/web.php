@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +18,23 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Home');
 });
-Route::get('/users', function () {
-    return Inertia::render('Users',['time'=>now()->toTimeString()]);
+
+Route::get('/users', function (Request $request) {
+    return Inertia::render('Users/Index', [
+        'users' => \App\Models\User::query()->when($request->input('search'), function ($query, $search) {
+            $query->where('name', 'like', "%" . $search . "%");
+        })
+            ->select('name', 'email', 'id')
+            ->paginate(3),
+        'filters' => $request->only(['search'])
+    ]);
 });
+
+Route::get('/users/create', function () {
+    return Inertia::render('Users/Create', []);
+});
+
+
 Route::get('/settings', function () {
     return Inertia::render('Settings');
 });
@@ -27,5 +42,5 @@ Route::get('/contact_us', function () {
     return Inertia::render('ContactUs');
 });
 Route::post('/logout', function () {
-dd('logging the user out');
+    dd('logging the user out');
 });

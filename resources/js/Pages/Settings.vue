@@ -1,11 +1,9 @@
 <template>
-    <h1 class="text-4xl font-bold"> Settings  </h1>
-    <Nav/>
- </template>
 
-<script>
-import Nav from "../Shared/Nave";
-export default {
-    components: {Nav}
-};
-</script>
+    <Head title="Setting" />
+    <h1 class="text-4xl"> Settings </h1>
+        <Nav/>
+</template>
+
+
+

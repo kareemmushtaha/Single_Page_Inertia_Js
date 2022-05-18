@@ -1,26 +1,20 @@
 <template>
-     <nav class="mt-6">
-        <ul class="list-disc">
+    <nav>
+        <ul class="flex  space-x-6 ">
             <li>
-                <Link href="/" class="text-blue-500 hover:underline"
-                      :class="{'font-bold underline':$page.url =='/'}"> HOME</Link>
-            </li>
-            <li>
-                <Link href="/users" class="text-blue-500 hover:underline"
-                      :class="{'font-bold underline':$page.url.startsWith('/users')  }"> Users</Link>
-            </li>
-            <li>
-                <Link href="/settings" class="text-blue-500 hover:underline"
-                      :class="{'font-bold underline':$page.url.startsWith('/settings')}">Settings</Link>
-            </li>
-            <li>
-                <Link href="/contact_us" class="text-blue-500 hover:underline"
-                      :class="{'font-bold underline':$page.component=='ContactUs'}">Contact us</Link>
-            </li>
-            <li>
-                <Link href="/logout" method="post" as="button" :data="{foo:'bar'}" class="text-blue-500 hover:underline" >Logout</Link>
+                <NaveLink href="/" :active="$page.component == 'Home'"> HOME</NaveLink>
             </li>
 
+            <li>
+                <NaveLink href="/users" :active="$page.component == 'Users'"> Users</NaveLink>
+            </li>
+            <li>
+                <NaveLink href="/settings" :active="$page.component == 'Settings'"> Settings</NaveLink>
+            </li>
+
+            <li>
+                <NaveLink href="/contact_us" :active="$page.component == 'ContactUs'"> Contact Us</NaveLink>
+            </li>
         </ul>
     </nav>
 </template>
@@ -28,11 +22,11 @@
 
 <script>
 
-import {Link} from '@inertiajs/inertia-vue3'
+import NaveLink from "./NaveLink";
 
 export default {
     components: {
-        Link
+        NaveLink,
     }
 };
 </script>
