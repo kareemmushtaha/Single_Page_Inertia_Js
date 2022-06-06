@@ -4,6 +4,7 @@
 
     <div class="flex justify-between mb-6">
         <h1 class="text-4xl"> Users </h1>
+        <Link href="/users/create" class="text-blue-500"> New User </Link>
         <input type="text" placeholder="Search..." class="border px-2rounded-lg" v-model="search">
 
     </div>

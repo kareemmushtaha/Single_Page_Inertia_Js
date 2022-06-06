@@ -30,10 +30,20 @@ Route::get('/users', function (Request $request) {
     ]);
 });
 
+
 Route::get('/users/create', function () {
     return Inertia::render('Users/Create', []);
 });
 
+Route::post('/users/store', function (Request $request) {
+    $attributes = $request->validate([
+        'name' => 'required',
+        'email' => ['required','email'],
+        'password' => 'required',
+    ]);
+    \App\Models\User::create($attributes);
+    return redirect('/users');
+});
 
 Route::get('/settings', function () {
     return Inertia::render('Settings');
