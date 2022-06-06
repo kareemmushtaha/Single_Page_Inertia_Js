@@ -10,9 +10,8 @@
             <label class="block mb-2 uppercase front-bold text-xs text-gray-700" for="name"> Name
             </label>
 
-            <input v-model="form.name" class="border border-gray-400 p-2 w-full" type="text" name="name" id="name"
-            >
-            <div class="text-red-500 text-gray-700" v-if="errors.name" v-text="errors.name"></div>
+            <input v-model="form.name" class="border border-gray-400 p-2 w-full" type="text" name="name" id="name">
+            <div class="text-red-500 text-gray-700" v-if="form.errors.name" v-text="form.errors.name"></div>
 
         </div>
 
@@ -23,7 +22,7 @@
 
             <input v-model="form.email" class="border border-gray-400 p-2 w-full" type="email" name="email" id="email"
             >
-            <div  class="text-red-500 text-gray-700" v-if="errors.email" v-text="errors.email"></div>
+            <div class="text-red-500 text-gray-700" v-if="form.errors.email" v-text="form.errors.email"></div>
 
         </div>
 
@@ -35,12 +34,12 @@
             <input v-model="form.password" class="border border-gray-400 p-2 w-full" type="password" name="password"
                    id="password">
 
-            <div   class="text-red-500 text-gray-700" v-if="errors.password" v-text="errors.password"></div>
+            <div class="text-red-500 text-gray-700" v-if="form.errors.password" v-text="form.errors.password"></div>
         </div>
 
 
         <div class="mb-6">
-            <button type="submit" class="bg-blue-400 text-white rounded py-2 px-4 hover:bg-blue-500">
+            <button type="submit" class="bg-blue-400 text-white rounded py-2 px-4 hover:bg-blue-500" :disabled="form.processing">
                 Save
             </button>
         </div>
@@ -48,26 +47,24 @@
 
 
 </template>
-
 <script setup>
 
-
-import {reactive} from "vue";
-import {Inertia} from "@inertiajs/inertia";
+import {useForm} from "@inertiajs/inertia-vue3";
 
 
-defineProps({
-    errors: Object
-});
-
-
-let form = reactive({
+let form = useForm({
     name: '',
     email: '',
     password: '',
 });
+
+
+setTimeout(() => {
+    form.reset();
+}, 3000)
+
 let submit = () => {
-    Inertia.post('/users/store', form);
+    form.post('/users/store');
 }
 
 </script>

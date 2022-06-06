@@ -4,7 +4,7 @@
 
     <div class="flex justify-between mb-6">
         <h1 class="text-4xl"> Users </h1>
-        <Link href="/users/create" class="text-blue-500"> New User </Link>
+        <Link href="/users/create" class="text-blue-500"> New User</Link>
         <input type="text" placeholder="Search..." class="border px-2rounded-lg" v-model="search">
 
     </div>
@@ -80,33 +80,24 @@
             </div>
         </div>
     </div>
-
     <Pagination :links="users.links" class="mt-6"/>
-
-
 </template>
 <script setup>
+
 import Pagination from "../../Shared/Pagination";
 import {ref, watch} from "vue";
 import {Inertia} from "@inertiajs/inertia"
-
+import debounce from "lodash/debounce"
 
 let props = defineProps({
     users: Object,
     filters: Object
 })
-
-
 let search = ref(props.filters.search);
 
-
-watch(search, value => {
-    Inertia.get('/users', {search: value}, {
-        preserveState: true,
-        replace:true
-    });
-});
-
+watch(search, debounce(function (value) {
+    Inertia.get('/users', {search: value}, {preserveState: true, replace: true});
+}, 900));
 
 </script>
 
